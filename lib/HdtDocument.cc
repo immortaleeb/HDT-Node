@@ -53,9 +53,9 @@ const Nan::Persistent<Function>& HdtDocument::GetConstructor() {
     // Create prototype
     Nan::SetPrototypeMethod(constructorTemplate, "_searchTriples",  SearchTriples);
     Nan::SetPrototypeMethod(constructorTemplate, "_searchLiterals", SearchLiterals);
-    Nan::SetPrototypeMethod(constructorTemplate, "subjects",        Subjects);
-    Nan::SetPrototypeMethod(constructorTemplate, "objects",         Objects);
-    Nan::SetPrototypeMethod(constructorTemplate, "predicates",      Predicates);
+    Nan::SetPrototypeMethod(constructorTemplate, "_subjectsIterator",        Subjects);
+    Nan::SetPrototypeMethod(constructorTemplate, "_objectsIterator",         Objects);
+    Nan::SetPrototypeMethod(constructorTemplate, "_predicatesIterator",      Predicates);
     Nan::SetPrototypeMethod(constructorTemplate, "close",           Close);
     Nan::SetAccessor(constructorTemplate->PrototypeTemplate(),
                      Nan::New("_features").ToLocalChecked(), Features);

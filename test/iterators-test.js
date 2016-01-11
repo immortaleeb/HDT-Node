@@ -29,6 +29,21 @@ describe('hdt', function () {
       document.close(done);
     });
 
+    it('should have a subjects function', function () {
+      document.should.have.property('subjects');
+      document.subjects.should.be.type('function');
+    });
+
+    it('should have a objects function', function () {
+      document.should.have.property('objects');
+      document.objects.should.be.type('function');
+    });
+
+    it('should have a predicates function', function () {
+      document.should.have.property('predicates');
+      document.predicates.should.be.type('function');
+    });
+
     describe('subjects', function () {
       var subjects;
       before(function () {
@@ -39,19 +54,35 @@ describe('hdt', function () {
         subjects.should.be.an.Object;
       });
 
-      it('should have a next function', function () {
-        subjects.should.have.property('next');
-        subjects.next.should.be.type('function');
+      it('should have a forEach function', function() {
+        subjects.should.have.property('forEach');
+        subjects.forEach.should.be.type('function');
       });
 
-      describe('next', function () {
+      it('should have an iterator function', function () {
+        subjects.should.have.property('iterator');
+        subjects.iterator.should.be.type('function');
+      });
+
+      describe('iterator', function () {
         var prefix = 'http://example.org/s',
-            testSubjectValue;
+            testSubjectValue,
+            iterator;
 
         before(function () {
+          iterator = subjects.iterator();
           testSubjectValue = function (i, done) {
-            testEntityValue(subjects, i, prefix + i, done);
+            testEntityValue(iterator, i, prefix + i, done);
           };
+        });
+
+        it('should be an object', function() {
+          iterator.should.be.an.Object;
+        });
+
+        it('should have a next function', function() {
+          iterator.should.have.property('next');
+          iterator.next.should.be.type('function');
         });
 
         // Should find 4 subjects
@@ -66,7 +97,7 @@ describe('hdt', function () {
 
         // There should be no 5th subject
         it('should not return a fifth subject', function (done) {
-          subjects.next(function (subject) {
+          iterator.next(function (subject) {
             (subject === null).should.be.true;
             done();
           });
@@ -84,12 +115,17 @@ describe('hdt', function () {
         objects.should.be.an.Object;
       });
 
-      it('should have a next function', function () {
-        objects.should.have.property('next');
-        objects.next.should.be.type('function');
+      it('should have a forEach function', function() {
+        objects.should.have.property('forEach');
+        objects.forEach.should.be.type('function');
       });
 
-      describe('next', function () {
+      it('should have an iterator function', function () {
+        objects.should.have.property('iterator');
+        objects.iterator.should.be.type('function');
+      });
+
+      describe('iterator', function () {
         var prefix = 'http://example.org/o',
             objectLiterals = [
               '""',
@@ -105,16 +141,27 @@ describe('hdt', function () {
               '"a\"b\'c\\\r\n\\"^^<http://example.org/literal>',
               '"a\"b\'c\\\r\n\\"^^<http://www.w3.org/2001/XMLSchema#string>'
             ],
-            testObjectValue;
+            testObjectValue,
+            iterator;
 
         before(function () {
+          iterator = objects.iterator();
           testObjectValue = function (i, done) {
             var value = (i <= objectLiterals.length) ?
               objectLiterals[i-1] : 
               prefix + threeNumberString(i - objectLiterals.length);
 
-            testEntityValue(objects, i, value, done);
+            testEntityValue(iterator, i, value, done);
           };
+        });
+
+        it('should be an object', function () {
+          iterator.should.be.an.Object;
+        });
+
+        it('should have a next function', function () {
+          iterator.should.have.property('next');
+          iterator.next.should.be.type('function');
         });
 
         // Should find 112 objects
@@ -129,7 +176,7 @@ describe('hdt', function () {
 
         // There should be no 113th object
         it('should not return a 113th object', function (done) {
-          objects.next(function (object) {
+          iterator.next(function (object) {
             (object === null).should.be.true;
             done();
           });
@@ -147,19 +194,35 @@ describe('hdt', function () {
         predicates.should.be.an.Object;
       });
 
-      it('should have a next function', function () {
-        predicates.should.have.property('next');
-        predicates.next.should.be.type('function');
+      it('should have a forEach function', function () {
+        predicates.should.have.property('forEach');
+        predicates.forEach.should.be.type('function');
       });
 
-      describe('next', function () {
+      it('should have an iterator function', function () {
+        predicates.should.have.property('iterator');
+        predicates.iterator.should.be.type('function');
+      });
+
+      describe('iterator', function () {
         var prefix = 'http://example.org/p',
-            testPredicateValue;
+            testPredicateValue,
+            iterator;
 
         before(function () {
+          iterator = predicates.iterator();
           testPredicateValue = function (i, done) {
-            testEntityValue(predicates, i, prefix + i, done);
+            testEntityValue(iterator, i, prefix + i, done);
           };
+        });
+
+        it('should be an object', function () {
+          iterator.should.be.an.Object;
+        });
+
+        it('should have a next function', function () {
+          iterator.should.have.property('next');
+          iterator.next.should.be.type('function');
         });
 
         // Should find 3 predicates
@@ -174,7 +237,7 @@ describe('hdt', function () {
 
         // There should be no 4th predicates
         it('should not return a fourth predicate', function (done) {
-          predicates.next(function (predicate) {
+          iterator.next(function (predicate) {
             (predicate === null).should.be.true;
             done();
           });
