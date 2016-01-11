@@ -50,12 +50,22 @@ public:
 
   void HandleOKCallback() {
     Nan::HandleScope scope;
-    // Create a v8 string
-    v8::Local<v8::Value> entity = Nan::New(std::string(reinterpret_cast<char*>(result))).ToLocalChecked();
+
+    // Prepare arguments for the callback
+    const unsigned argc = 1;
+    v8::Local<v8::Value> argv[argc] = {};
+
+    // Check if we got a null pointer as a result
+    if (result != nullptr) {
+      // Create a v8 string
+      v8::Local<v8::Value> entity = Nan::New(std::string(reinterpret_cast<char*>(result))).ToLocalChecked();
+
+      argv[0] = entity;
+    } else {
+      argv[0] = Nan::Null();
+    }
 
     // Call callback
-    const unsigned argc = 1;
-    v8::Local<v8::Value> argv[argc] = { entity };
     callback->Call(argc, argv);
   }
 };
