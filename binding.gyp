@@ -5,6 +5,7 @@
       "sources": [
         "lib/hdt.cc",
         "lib/HdtDocument.cc",
+        "lib/EntityIterator.cc",
         "<!@(ls -1 deps/hdt-lib/src/bitsequence/*.cpp)",
         "<!@(ls -1 deps/hdt-lib/src/dictionary/*.cpp)",
         "<!@(ls -1 deps/hdt-lib/src/hdt/*.cpp)",

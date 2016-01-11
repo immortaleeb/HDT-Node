@@ -7,6 +7,7 @@
 #include <HDTVocabulary.hpp>
 #include <LiteralDictionary.hpp>
 #include "HdtDocument.h"
+#include "EntityIterator.h"
 
 using namespace v8;
 using namespace hdt;
@@ -52,6 +53,9 @@ const Nan::Persistent<Function>& HdtDocument::GetConstructor() {
     // Create prototype
     Nan::SetPrototypeMethod(constructorTemplate, "_searchTriples",  SearchTriples);
     Nan::SetPrototypeMethod(constructorTemplate, "_searchLiterals", SearchLiterals);
+    Nan::SetPrototypeMethod(constructorTemplate, "subjects",        Subjects);
+    Nan::SetPrototypeMethod(constructorTemplate, "objects",         Objects);
+    Nan::SetPrototypeMethod(constructorTemplate, "predicates",      Predicates);
     Nan::SetPrototypeMethod(constructorTemplate, "close",           Close);
     Nan::SetAccessor(constructorTemplate->PrototypeTemplate(),
                      Nan::New("_features").ToLocalChecked(), Features);
@@ -331,6 +335,42 @@ NAN_METHOD(HdtDocument::Close) {
 NAN_PROPERTY_GETTER(HdtDocument::Closed) {
   HdtDocument* hdtDocument = Unwrap<HdtDocument>(info.This());
   info.GetReturnValue().Set(Nan::New<Boolean>(!hdtDocument->hdt));
+}
+
+
+
+/******** HdtDocument#subjects ********/
+
+
+// Returns an iterator over all subjects in the document.
+NAN_METHOD(HdtDocument::Subjects) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(EntityIterator::NewInstance(dictionary->getSubjects()));
+}
+
+
+
+/******** HdtDocument#objects ********/
+
+
+// Returns an iterator over all objects in the document.
+NAN_METHOD(HdtDocument::Objects) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(EntityIterator::NewInstance(dictionary->getObjects()));
+}
+
+
+
+/******** HdtDocument#predicates ********/
+
+
+// Returns an iterator over all subjects in the document.
+NAN_METHOD(HdtDocument::Predicates) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(EntityIterator::NewInstance(dictionary->getPredicates()));
 }
 
 
