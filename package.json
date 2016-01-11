@@ -26,7 +26,9 @@
   },
   "scripts": {
     "test": "node_modules/mocha/bin/mocha",
-    "hint": "node_modules/jshint/bin/jshint lib/*.js test/*.js bin/*"
+    "hint": "node_modules/jshint/bin/jshint lib/*.js test/*.js bin/*",
+    "lint": "jshint .",
+    "validate": "npm ls"
   },
   "dependencies": {
     "minimist": "^1.1.0",
@@ -36,11 +38,16 @@
   "devDependencies": {
     "should": "4.0.x",
     "mocha": "1.21.x",
-    "jshint": "2.1.x",
-    "precommit-hook": "1.0.x"
+    "jshint": "2.8.x",
+    "precommit-hook": "3.0.x"
   },
   "precommit": [
     "hint",
+    "test"
+  ],
+  "pre-commit": [
+    "lint",
+    "validate",
     "test"
   ]
 }
