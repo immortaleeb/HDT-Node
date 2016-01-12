@@ -54,9 +54,25 @@ describe('hdt', function () {
         subjects.should.be.an.Object;
       });
 
-      it('should have a forEach function', function() {
+      it('should have a forEach function', function () {
         subjects.should.have.property('forEach');
         subjects.forEach.should.be.type('function');
+      });
+
+      describe('forEach', function () {
+        it('should find 4 subjects', function (done) {
+          var count = 0;
+          subjects.forEach(function(subject) {
+            (!!subject).should.be.true;
+            count++;
+          });
+
+          // Cheaty way to call done after forEach
+          setTimeout(function () {
+            count.should.equal(4);
+            done();
+          }, 100);
+        });
       });
 
       it('should have an iterator function', function () {
@@ -118,6 +134,22 @@ describe('hdt', function () {
       it('should have a forEach function', function() {
         objects.should.have.property('forEach');
         objects.forEach.should.be.type('function');
+      });
+
+      describe('forEach', function () {
+        it('should find 112 objects', function (done) {
+          var count = 0;
+          objects.forEach(function(object) {
+            (!!object).should.be.true;
+            count++;
+          });
+
+          // Cheaty way to call done after forEach
+          setTimeout(function () {
+            count.should.equal(112);
+            done();
+          }, 100);
+        });
       });
 
       it('should have an iterator function', function () {
@@ -197,6 +229,22 @@ describe('hdt', function () {
       it('should have a forEach function', function () {
         predicates.should.have.property('forEach');
         predicates.forEach.should.be.type('function');
+      });
+
+      describe('forEach', function () {
+        it('should find 3 predicates', function (done) {
+          var count = 0;
+          predicates.forEach(function(predicate) {
+            (!!predicate).should.be.true;
+            count++;
+          });
+
+          // Cheaty way to call done after forEach
+          setTimeout(function () {
+            count.should.equal(3);
+            done();
+          }, 100);
+        });
       });
 
       it('should have an iterator function', function () {
