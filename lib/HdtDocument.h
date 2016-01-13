@@ -40,12 +40,18 @@ class HdtDocument : public node::ObjectWrap {
   static NAN_METHOD(Close);
   // HdtDocument#closed
   static NAN_PROPERTY_GETTER(Closed);
-  // HdtDocument#subjects
+  // HdtDocument#_subjectsIterator
   static NAN_METHOD(Subjects);
-  // HdtDocument#objects
+  // HdtDocument#_objectsIterator
   static NAN_METHOD(Objects);
-  // HdtDocument#predicate
+  // HdtDocument#_predicatesIterator
   static NAN_METHOD(Predicates);
+  // HdtDocument#_getNSubjects
+  static NAN_METHOD(GetNSubjects);
+  // HdtDocument#_getNObjects
+  static NAN_METHOD(GetNObjects);
+  // HdtDocument#_getNPredicates
+  static NAN_METHOD(GetNPredicates);
 };
 
 // Converts a JavaScript literal to an HDT literal

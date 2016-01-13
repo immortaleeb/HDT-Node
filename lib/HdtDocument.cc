@@ -56,6 +56,9 @@ const Nan::Persistent<Function>& HdtDocument::GetConstructor() {
     Nan::SetPrototypeMethod(constructorTemplate, "_subjectsIterator",        Subjects);
     Nan::SetPrototypeMethod(constructorTemplate, "_objectsIterator",         Objects);
     Nan::SetPrototypeMethod(constructorTemplate, "_predicatesIterator",      Predicates);
+    Nan::SetPrototypeMethod(constructorTemplate, "_getNSubjects",            GetNSubjects);
+    Nan::SetPrototypeMethod(constructorTemplate, "_getNObjects",             GetNObjects);
+    Nan::SetPrototypeMethod(constructorTemplate, "_getNPredicates",          GetNPredicates);
     Nan::SetPrototypeMethod(constructorTemplate, "close",           Close);
     Nan::SetAccessor(constructorTemplate->PrototypeTemplate(),
                      Nan::New("_features").ToLocalChecked(), Features);
@@ -339,7 +342,7 @@ NAN_PROPERTY_GETTER(HdtDocument::Closed) {
 
 
 
-/******** HdtDocument#subjects ********/
+/******** HdtDocument#_subjectsIterator ********/
 
 
 // Returns an iterator over all subjects in the document.
@@ -351,7 +354,7 @@ NAN_METHOD(HdtDocument::Subjects) {
 
 
 
-/******** HdtDocument#objects ********/
+/******** HdtDocument#_objectsIterator ********/
 
 
 // Returns an iterator over all objects in the document.
@@ -363,7 +366,7 @@ NAN_METHOD(HdtDocument::Objects) {
 
 
 
-/******** HdtDocument#predicates ********/
+/******** HdtDocument#_predicatesIterator ********/
 
 
 // Returns an iterator over all subjects in the document.
@@ -371,6 +374,42 @@ NAN_METHOD(HdtDocument::Predicates) {
   HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
   Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
   info.GetReturnValue().Set(EntityIterator::NewInstance(dictionary->getPredicates()));
+}
+
+
+
+/******** HdtDocument#_getNSubjects ********/
+
+
+// Returns the number of subjects in the dictionary of this document
+NAN_METHOD(HdtDocument::GetNSubjects) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(Nan::New(dictionary->getNsubjects()));
+}
+
+
+
+/******** HdtDocument#_getNObjects ********/
+
+
+// Returns the number of objects in the dictionary of this document
+NAN_METHOD(HdtDocument::GetNObjects) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(Nan::New(dictionary->getNobjects()));
+}
+
+
+
+/******** HdtDocument#_getNPredicates ********/
+
+
+// Returns the number of predicates in the dictionary of this document
+NAN_METHOD(HdtDocument::GetNPredicates) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(Nan::New(dictionary->getNpredicates()));
 }
 
 

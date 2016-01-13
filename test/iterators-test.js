@@ -59,6 +59,17 @@ describe('hdt', function () {
         subjects.forEach.should.be.type('function');
       });
 
+      it('should have a size function', function () {
+        subjects.should.have.property('size');
+        subjects.size.should.be.type('function');
+      });
+
+      describe('size', function () {
+        it('should find 4 subjects', function () {
+          subjects.size().should.equal(4);
+        });
+      });
+
       describe('forEach', function () {
         it('should find 4 subjects', function (done) {
           var count = 0;
@@ -134,6 +145,17 @@ describe('hdt', function () {
       it('should have a forEach function', function() {
         objects.should.have.property('forEach');
         objects.forEach.should.be.type('function');
+      });
+
+      it('should have a size function', function () {
+        objects.should.have.property('size');
+        objects.size.should.be.type('function');
+      });
+
+      describe('size', function () {
+        it('should find 112 objects', function () {
+          objects.size().should.equal(112);
+        });
       });
 
       describe('forEach', function () {
@@ -229,6 +251,17 @@ describe('hdt', function () {
       it('should have a forEach function', function () {
         predicates.should.have.property('forEach');
         predicates.forEach.should.be.type('function');
+      });
+
+      it('should have a size function', function () {
+        predicates.should.have.property('size');
+        predicates.size.should.be.type('function');
+      });
+
+      describe('size', function () {
+        it('should find 3 predicates', function () {
+          predicates.size().should.equal(3);
+        });
       });
 
       describe('forEach', function () {
