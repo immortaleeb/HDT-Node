@@ -84,6 +84,17 @@ describe('hdt', function () {
             done();
           }, 100);
         });
+
+        it('should call the done callback after 4 iterations', function (done) {
+          var count = 0;
+          subjects.forEach(function () {
+            count++;
+          }, function (size) {
+            size.should.equal(4);
+            count.should.equal(4);
+            done();
+          });
+        });
       });
 
       it('should have an iterator function', function () {
@@ -171,6 +182,17 @@ describe('hdt', function () {
             count.should.equal(112);
             done();
           }, 100);
+        });
+
+        it('should call the done callback after 112 iterations', function (done) {
+          var count = 0;
+          objects.forEach(function () {
+            count++;
+          }, function (size) {
+            size.should.equal(112);
+            count.should.equal(112);
+            done();
+          });
         });
       });
 
@@ -277,6 +299,17 @@ describe('hdt', function () {
             count.should.equal(3);
             done();
           }, 100);
+        });
+
+        it('should call the done callback after 3 iterations', function (done) {
+          var count = 0;
+          predicates.forEach(function () {
+            count++;
+          }, function (size) {
+            size.should.equal(3);
+            count.should.equal(3);
+            done();
+          });
         });
       });
 
