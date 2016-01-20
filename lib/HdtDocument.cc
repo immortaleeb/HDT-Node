@@ -56,9 +56,11 @@ const Nan::Persistent<Function>& HdtDocument::GetConstructor() {
     Nan::SetPrototypeMethod(constructorTemplate, "_subjectsIterator",        Subjects);
     Nan::SetPrototypeMethod(constructorTemplate, "_objectsIterator",         Objects);
     Nan::SetPrototypeMethod(constructorTemplate, "_predicatesIterator",      Predicates);
+    Nan::SetPrototypeMethod(constructorTemplate, "_sharedIterator",          Shared);
     Nan::SetPrototypeMethod(constructorTemplate, "_getNSubjects",            GetNSubjects);
     Nan::SetPrototypeMethod(constructorTemplate, "_getNObjects",             GetNObjects);
     Nan::SetPrototypeMethod(constructorTemplate, "_getNPredicates",          GetNPredicates);
+    Nan::SetPrototypeMethod(constructorTemplate, "_getNShared",              GetNShared);
     Nan::SetPrototypeMethod(constructorTemplate, "close",           Close);
     Nan::SetAccessor(constructorTemplate->PrototypeTemplate(),
                      Nan::New("_features").ToLocalChecked(), Features);
@@ -378,6 +380,18 @@ NAN_METHOD(HdtDocument::Predicates) {
 
 
 
+/******** HdtDocument#_sharedIterator ********/
+
+
+// Returns an iterator over all shared objects/subjects in the document.
+NAN_METHOD(HdtDocument::Shared) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(EntityIterator::NewInstance(dictionary->getShared()));
+}
+
+
+
 /******** HdtDocument#_getNSubjects ********/
 
 
@@ -410,6 +424,18 @@ NAN_METHOD(HdtDocument::GetNPredicates) {
   HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
   Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
   info.GetReturnValue().Set(Nan::New(dictionary->getNpredicates()));
+}
+
+
+
+/******** HdtDocument#_getNShared ********/
+
+
+// Returns the number of shared objects/subjects in the dictionary of this document
+NAN_METHOD(HdtDocument::GetNShared) {
+  HdtDocument *hdtDocument = Unwrap<HdtDocument>(info.This());
+  Dictionary *dictionary = hdtDocument->GetHDT()->getDictionary();
+  info.GetReturnValue().Set(Nan::New(dictionary->getNshared()));
 }
 
 
